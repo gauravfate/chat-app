@@ -1,25 +1,33 @@
-import React from 'react'
+import useConversation from '../../zustand/useConversation'
 
-const Conversation = () => {
+const Conversation = ({ conversation, lastIdx, emoji }) => {
+    const { selectedConversation, setSelectedConversation } = useConversation();
+    
+    const isSelected = selectedConversation?._id === conversation._id;
+
     return (
         <>
-            <div className='flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer'>
+            <div className={`flex gap-2 items-center hover:bg-sky-500 rounded p-2 py-1 cursor-pointer
+                ${isSelected ? 'bg-sky-500' : ""}
+            `}
+                onClick={() => setSelectedConversation(conversation)}
+            >
                 <div className='avatar online'>
                     <div className='w-12 rounded-full'>
-                        <img src='https://img.freepik.com/free-vector/isolated-young-handsome-man-different-poses-white-background-illustration_632498-859.jpg?w=740&t=st=1709717676~exp=1709718276~hmac=e5e50801fa56d9bf5560017600aec71eec2229dcc0a801e53093de9259548a94'
+                        <img src={conversation.profilePic}
                             alt="user avatar" />
                     </div>
                 </div>
 
                 <div className='flex flex-col flex-1'>
                     <div className='flex gap-3 justify-between'>
-                        <p className='font-bold text-gray-200'>Gaurav Fate</p>
-                        <span className='text-xl'>🎃</span>
+                        <p className='font-bold text-gray-200'>{conversation.fullName}</p>
+                        <span className='text-xl'>{emoji}</span>
                     </div>
                 </div>
             </div>
 
-            <div className='divider my-0 py-0 h-1'></div>
+            {!lastIdx && <div className='divider my-0 py-0 h-1' />}
         </>
     )
 }
