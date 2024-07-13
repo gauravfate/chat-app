@@ -2,6 +2,7 @@ import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 import authRoutes from './routes/auth.routes.js'
 import messageRoutes from './routes/message.routes.js'
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 dotenv.config();
+app.use(cors());
 
 app.use(express.json());    // to parse the incoming request with json payloads (from req.body)
 app.use(cookieParser())     // used to parse the cookies
